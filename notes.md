@@ -108,9 +108,23 @@ Client functionallity is broken into three logical pieces: *spotters*, *mappers*
 ### Application classification types
 GPS can be used as a positioning technology to provide situational awareness at a building-part granularity, especially when A-GPS is available, yielding an accuracy level of tens of meters and a time to first fix in the range from a few seconds to minutes. GPS though, does not currently provide instantly available indoor positioning accurate to the meter as might be crucial for some indoor applications, e.g. fire fighters navigating in burning buildings. Therefore, antother use of indoor GPS would be as a complementary indoor positioning technology, e.g. to help fighting the error growth over time of inertial positioning systems when available. The results are also indicative for the performance of future embedded GPS devices, as state-of-the-art receivers are being constantly miniaturized and power optimized.
 # Electronic compasses and accelerometers
+> This paper identifies the possibility of using electronic compasses and accelerometers in mobile phones, as a simple and scalable method of localization without war-driving. The idea is not fundamentally different from ship or air navigation systems, know for centruries. Nontheless, directly applying the idea to human-scale environments is non-trivial. Noise phone sensors and complicated human movements present pratical research challenges. We cope with these challenges by recording a person's walking patterns, and matching it against possbile path signatures generated from a local electronic map. Electronic maps enable greater coverage, while eliminating the reliance on WiFi infrastructure and expensive war-driving. Measurements on Nokia phones and evaluation with real users confirm the anticipated benefits. Results show a location accuracy of less than 11m in regions where today's localization services are unsatisfactory or unavailable.
+
 ### Concepts
+- War-driving is an expensive calibration operation, but offers limited localization coverage.
+- Independence from infrastructure.
+- Energy consumption with GPS and WiFi pased localization pose a serious tradeoff between localization accuracy and energi.
+- Uses only infrequent Assisted-GPS location, and use it as a reference for subsequent position estimation
+
 ### Measurements techniques
 ### System architecture choices
+1. ComAcc starts by obtaining the phone's location using either GPS or A-GPS
+2. The location is sent to a remote server, which returns a small map with all walking paths in that region
+3. When the phone begins to move, then the accelerometer readings are used to estimate the user's displacement (using the rhythmic nature of human walking patterns)
+4. Alongside the phone's compass orientations are also recorded, i.e. a time-indexed (distance, orientation)-tuple is formed
+
+The noise that can occur with the accelerometer is handled by mathing the directional trail with possible walking paths around the phone's known location. The best matching path is declare to be the path of the user.
+
 ### Application classification types
 
 # EnTracked
