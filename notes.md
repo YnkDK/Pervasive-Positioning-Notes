@@ -128,10 +128,55 @@ The noise that can occur with the accelerometer is handled by mathing the direct
 ### Application classification types
 
 # EnTracked
+> An important feature of modern mobile device is that it can position itself. Notonly for useo n the device but also for remote applications that require tracking of the device. To be useful, such position tracking has to be energy-efficient to avoid having a major impact on the battry life of the mobile device. Furthermore, tracking has to robustly deliver position updates when faced with changing conditions such as delays due to positioning and communication, and changing positioning accuracy.
+> This work propses EnTracked - a system that, based on the estimation and prediction of system conditions and mobility, schedules position updates to both minimize energy consumption and optimize robustness. The realized system tracks pedestrian targets equipped with GPS-enabled devices. The system is configurable to realize different trade-offs between energy consumption and robustness.
+> We provede extensive experimental results by profiling how devices consume power, by emulation on collected data and by validation in several real-world deployments. Results from this profiling show how a device consumes power while tracking its position. Results from the emulation indicate that the system can estimate and predict system conditions and mobility. Furthermore they provide evidence for that system conditions and mobility. Furthermore they provide evidence for that the system can lower the enery consumption considerably and remain robust when faced with changing system conditions. By validation in several real-world deployments we provide evidence that the real system works as predicted by the emulation
+
+
 ### Concepts
+- Minimizing the power consumption by ysing large intervals between position updates is a problem, since a pedestrian target can walk or run far during two to five minutes.
+	- Other issuses is that GPS or the GSM transceiver have delays when initializing and powering off.
+	- GPS positioning time depends on how well the GPS module knows the frequencies of visible satellites, the current satellite constellation etc
+	- The accuracy of GPS positioning depends on the number of visible satellites, signal-blocking structures near the receiver and several other factors
+	- Previous systems was evaulated by either simulation or emulation
+- The EnTracked schedules position-updates to both minimize energy consumption and optimize robustness
+	- Based on the estimation and prediction of system conditions and mobility
+- It is configurable to realize different trade-offs between enery consumption and robustness
+
 ### Measurements techniques
+- To make predictions it is required to have a device model that can account for the delays and power consumption of the device. If this cannout be obtained, then the system cannot make decisions that will minimize the power consumption and make position updates within the required limits.
+	- One model is to use the instant model
+	- They use a device specific model
+	- Can be generalized with automatic paramter selection
+- The power consumption is monitored
+- Internal phone GPS
+- Internal phone UMTS radio for sending data
+
+
 ### System architecture choices
+- The device model
+	- In both model they consider the following
+		- Accelerometer
+		- GPS
+		- radio idle
+		- radio active
+		- idle (not strictly a feature, but gives a baseline)
+	- **Power model**: Describes the power usage of the phone
+		- To determine the power parameters for the above, they run experiments with different features enabled and disabled, then took the **average** for these measurements.
+	- **Delay model**: Describes the delays when requesting a phone feature, e.g. the time it takes for the GPS to return a position
+- EnTracked
+	- Assumes an upper threshold on target speed (10 ms/s = 36 km/h for pedestrian)
+	- The application have to provide error-limits (motivated to minimize power consumption or user will not use app)
+	- The error limits might be calculated depending on application, e.g. zoom level
+
+![Global Alignment Recursion](http://cs.au.dk/~mys/bioseq/entracked-fig4.png "Entracked flow")
+![Global Alignment Recursion](http://cs.au.dk/~mys/bioseq/entracked-fig5.png "Entracked client logic")
+
+
 ### Application classification types
+- Geo-based information applications
+- Proximity and separation detection for social networking applications
+
 
 # Energy-efficient Trajectory Tracking for Mobile Devices
 ### Concepts
